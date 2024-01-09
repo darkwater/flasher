@@ -1,0 +1,36 @@
+name: Rust Build
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: "clickable/ci-16.04-arm64:7.12.0-16.04.5"
+      # image: ubuntu:16.04
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        apt-get update
+        apt-get install -y build-essential libusb-1.0-0-dev pkg-config
+
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: stable
+        override: true
+
+    - name: Build
+      run: clickable build
+
+    - name: Upload
+      uses: actions/upload-artifact@v2
+      with:
+        name: flasher
+        path: ./
