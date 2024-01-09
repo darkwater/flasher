@@ -27,10 +27,12 @@ jobs:
         override: true
 
     - name: Build
-      run: clickable build
+      run: |
+        clickable build
+        find . -name \*.click -exec mv {} . \;
 
     - name: Upload
       uses: actions/upload-artifact@v2
       with:
         name: flasher
-        path: ./
+        path: "*.click"
