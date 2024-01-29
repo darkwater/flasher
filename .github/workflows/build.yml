@@ -6,33 +6,37 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-13 # get an arm64 machine
     container:
-      image: "clickable/ci-16.04-arm64:7.12.0-16.04.5"
-      # image: ubuntu:16.04
+      image: ubuntu:16.04
 
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Install dependencies
+    - name: Test
       run: |
-        apt-get update
-        apt-get install -y build-essential libusb-1.0-0-dev pkg-config
+        uname -a
+        file /bin/sh
 
-    - name: Install Rust
-      uses: actions-rs/toolchain@v1
-      with:
-        profile: minimal
-        toolchain: stable
-        override: true
+    # - uses: actions/checkout@v2
 
-    - name: Build
-      run: |
-        clickable build
-        find . -name \*.click -exec mv {} . \;
+    # - name: Install dependencies
+    #   run: |
+    #     apt-get update
+    #     apt-get install -y build-essential libusb-1.0-0-dev pkg-config
 
-    - name: Upload
-      uses: actions/upload-artifact@v2
-      with:
-        name: flasher
-        path: "*.click"
+    # - name: Install Rust
+    #   uses: actions-rs/toolchain@v1
+    #   with:
+    #     profile: minimal
+    #     toolchain: stable
+    #     override: true
+
+    # - name: Build
+    #   run: |
+    #     clickable build
+    #     find . -name \*.click -exec mv {} . \;
+
+    # - name: Upload
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: flasher
+    #     path: "*.click"

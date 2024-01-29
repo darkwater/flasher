@@ -1,9 +1,0 @@
-clickable_minimum_required: 7.0.0
-builder: rust
-kill: flasher
-framework: "ubuntu-sdk-16.04.5"
-install_root_data:
-- manifest.json
-- flasher.apparmor
-- flasher.desktop
-- assets
